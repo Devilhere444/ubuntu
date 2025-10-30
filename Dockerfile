@@ -5,22 +5,24 @@ ENV DISPLAY=:1
 ENV VNC_PORT=5000
 
 # Update system and install GNOME desktop with VNC and noVNC
+# Install git temporarily to clone noVNC, then remove it to save space
 RUN apt update && apt upgrade -y && \
-    apt install -y ubuntu-desktop-minimal \
+    apt install -y --no-install-recommends \
+                   ubuntu-desktop-minimal \
                    tigervnc-standalone-server \
                    tigervnc-common \
                    dbus-x11 \
                    supervisor \
                    python3 \
                    python3-numpy \
-                   git \
-                   wget && \
-    apt clean && rm -rf /var/lib/apt/lists/*
-
-# Install noVNC and websockify
-RUN git clone https://github.com/novnc/noVNC.git /opt/novnc && \
-    git clone https://github.com/novnc/websockify /opt/novnc/utils/websockify && \
-    ln -s /opt/novnc/vnc.html /opt/novnc/index.html
+                   git && \
+    git clone --depth 1 https://github.com/novnc/noVNC.git /opt/novnc && \
+    git clone --depth 1 https://github.com/novnc/websockify /opt/novnc/utils/websockify && \
+    ln -s /opt/novnc/vnc.html /opt/novnc/index.html && \
+    apt purge -y git && \
+    apt autoremove -y && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /root/.cache
 
 # Create ubuntu user or modify existing
 RUN id ubuntu &>/dev/null || useradd -m -s /bin/bash -u 1000 ubuntu; \
