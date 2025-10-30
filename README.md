@@ -6,7 +6,8 @@ A clean Ubuntu 24.04 GNOME desktop environment running in Docker, optimized for 
 
 - **OS**: Ubuntu 24.04 LTS
 - **Desktop**: GNOME (Minimal Installation)
-- **Remote Access**: VNC Server on port 5000
+- **Remote Access**: VNC Server with noVNC web interface on port 5000
+- **Web Access**: Browser-based desktop via noVNC
 - **Storage**: 500GB persistent disk
 - **Plan**: Pro Ultra (32GB RAM, highest CPU configuration)
 
@@ -30,11 +31,19 @@ The service is configured for:
 
 ## Accessing Your Desktop
 
-### Via VNC Client
+### Via Web Browser (noVNC - Easiest!)
+
+1. Get your Render service URL from the dashboard
+2. Open your browser and go to: `<your-render-url>:5000`
+3. Click "Connect" in the noVNC interface
+4. Enter VNC password: `ubuntu`
+5. Your GNOME desktop will appear in the browser!
+
+### Via VNC Client (Traditional)
 
 1. Install a VNC client (RealVNC Viewer, TigerVNC, TightVNC, etc.)
 2. Get your Render service URL from the dashboard
-3. Connect to: `<your-render-url>:5000`
+3. Connect to: `<your-render-url>:5900`
 4. Enter VNC password: `ubuntu`
 
 ## Credentials
@@ -50,8 +59,9 @@ The following services are managed by Supervisor:
 
 1. **Health Check Server** (Port 8080) - HTTP server for Render health checks
 2. **D-Bus System Daemon** - Required for GNOME
-3. **VNC Server** (Port 5000) - Xvnc with 1920x1080 resolution
-4. **GNOME Session** - Full GNOME desktop environment
+3. **VNC Server** (Port 5900) - Xvnc with 1920x1080 resolution
+4. **noVNC** (Port 5000) - Browser-based VNC client
+5. **GNOME Session** - Full GNOME desktop environment
 
 ## Resource Specifications
 
