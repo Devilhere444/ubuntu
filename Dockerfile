@@ -15,7 +15,7 @@ RUN apt update && apt upgrade -y && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Create ubuntu user or modify existing
-RUN (useradd -m -s /bin/bash -u 1000 ubuntu 2>/dev/null || true) && \
+RUN id ubuntu &>/dev/null || useradd -m -s /bin/bash -u 1000 ubuntu; \
     echo "ubuntu:ubuntu" | chpasswd && \
     usermod -aG sudo ubuntu
 
