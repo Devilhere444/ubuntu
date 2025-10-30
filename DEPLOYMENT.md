@@ -64,16 +64,13 @@ https://ubuntu-gnome-desktop-xxxx.onrender.com
 
 4. Enjoy your Ubuntu GNOME desktop!
 
-### 6. Access Web Interface
-Visit your service URL in a browser:
+### 6. Access Your GNOME Desktop
+Visit your service URL in a browser to verify the health check:
 ```
 https://ubuntu-gnome-desktop-xxxx.onrender.com
 ```
 
-This shows:
-- Connection instructions
-- System information
-- Health check status at `/health`
+You should see: "Ubuntu GNOME VNC Server - Port 5000"
 
 ## Troubleshooting
 

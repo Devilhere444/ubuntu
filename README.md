@@ -7,7 +7,6 @@ A clean Ubuntu 24.04 GNOME desktop environment running in Docker, optimized for 
 - **OS**: Ubuntu 24.04 LTS
 - **Desktop**: GNOME (Minimal Installation)
 - **Remote Access**: VNC Server on port 5000
-- **Web Interface**: Health check and info page on port 8080
 - **Storage**: 500GB persistent disk
 - **Plan**: Pro Ultra (32GB RAM, highest CPU configuration)
 
@@ -38,13 +37,6 @@ The service is configured for:
 3. Connect to: `<your-render-url>:5000`
 4. Enter VNC password: `ubuntu`
 
-### Web Interface
-
-Visit your Render service URL in a browser to see:
-- Connection instructions
-- System information
-- Health status at `/health`
-
 ## Credentials
 
 - **VNC Password**: `ubuntu`
@@ -74,14 +66,14 @@ The following services are managed by Supervisor:
 
 ### Change VNC Password
 
-Edit `Dockerfile` line 22:
+Edit `Dockerfile`:
 ```dockerfile
 echo "YOUR_PASSWORD" | vncpasswd -f > ~/.vnc/passwd && \
 ```
 
 ### Change Screen Resolution
 
-Edit `supervisord.conf` line 18:
+Edit `supervisord.conf`:
 ```ini
 command=/usr/bin/Xvnc :1 -geometry 1920x1080 ...
 ```
@@ -90,14 +82,14 @@ Common resolutions: 1920x1080, 2560x1440, 3840x2160
 
 ### Change Storage Size
 
-Edit `render.yaml` line 11:
+Edit `render.yaml`:
 ```yaml
 sizeGB: 500  # Change to your desired size
 ```
 
 ### Change Region
 
-Edit `render.yaml` line 6:
+Edit `render.yaml`:
 ```yaml
 region: oregon  # Options: oregon, frankfurt, singapore, ohio
 ```
