@@ -13,7 +13,7 @@ RUN apt update && apt upgrade -y && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Create or configure VNC user
-RUN id -u ubuntu &>/dev/null || useradd -m -s /bin/bash ubuntu && \
+RUN id -u ubuntu &>/dev/null || useradd -m -s /bin/bash ubuntu; \
     echo "ubuntu:ubuntu" | chpasswd && \
     usermod -aG sudo ubuntu
 
