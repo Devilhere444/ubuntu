@@ -12,7 +12,5 @@ services:
     envVars:
       - key: PORT
         value: 8080
-      - key: VNC_PORT
-        value: 5000
     numInstances: 1
     dockerCommand: /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
