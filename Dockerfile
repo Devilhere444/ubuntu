@@ -12,9 +12,10 @@ RUN apt update && apt upgrade -y && \
                    tigervnc-common xfce4-terminal curl wget sudo && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-# Create a VNC user
-RUN useradd -m -s /bin/bash ubuntu && \
-    echo "ubuntu:ubuntu" | chpasswd && adduser ubuntu sudo
+# Create or configure VNC user
+RUN id -u ubuntu &>/dev/null || useradd -m -s /bin/bash ubuntu; \
+    echo "ubuntu:ubuntu" | chpasswd && \
+    usermod -aG sudo ubuntu
 
 USER ubuntu
 WORKDIR /home/ubuntu
