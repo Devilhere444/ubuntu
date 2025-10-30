@@ -1,151 +1,31 @@
-# Ubuntu GNOME 24.04 Desktop on Render.com
+# Ubuntu GNOME 24.04 on Render.com
 
-A clean Ubuntu 24.04 GNOME desktop environment running in Docker, optimized for Render.com deployment with VNC access.
+Minimal Ubuntu 24.04 GNOME desktop running in browser via noVNC.
 
-## Features
-
-- **OS**: Ubuntu 24.04 LTS
-- **Desktop**: GNOME (Minimal Installation)
-- **Remote Access**: VNC Server with noVNC web interface on port 5000
-- **Web Access**: Browser-based desktop via noVNC
-- **Storage**: 500GB persistent disk
-- **Plan**: Pro Ultra (32GB RAM, highest CPU configuration)
-
-## Deployment on Render.com
-
-### Quick Deploy
+## Quick Start
 
 1. Fork this repository
-2. Connect your GitHub account to Render.com
-3. Create a new **Blueprint** in Render
-4. Point it to your forked repository
-5. Render will automatically detect `render.yaml` and deploy
+2. Connect to Render.com
+3. Create new Blueprint
+4. Deploy
 
-### Configuration
+## Access
 
-The service is configured for:
-- **Plan**: Pro Ultra (32GB RAM, 8 vCPUs)
-- **Region**: Oregon (can be changed in render.yaml)
-- **Persistent Storage**: 500GB mounted at `/home/ubuntu`
-- **Auto-deploy**: Enabled on git push
+Your service URL: `https://your-app.onrender.com`
 
-## Accessing Your Desktop
-
-### Via Web Browser (noVNC - Easiest!)
-
-1. Get your Render service URL from the dashboard
-2. Open your browser and go to: `<your-render-url>:5000`
-3. Click "Connect" in the noVNC interface
-4. Enter VNC password: `ubuntu`
-5. Your GNOME desktop will appear in the browser!
-
-### Via VNC Client (Traditional)
-
-1. Install a VNC client (RealVNC Viewer, TigerVNC, TightVNC, etc.)
-2. Get your Render service URL from the dashboard
-3. Connect to: `<your-render-url>:5900`
-4. Enter VNC password: `ubuntu`
-
-## Credentials
-
-- **VNC Password**: `ubuntu`
-- **System User**: `ubuntu`
-- **User Password**: `ubuntu`
-- **Sudo Access**: Yes (ubuntu user has sudo privileges)
-
-## Services Running
-
-The following services are managed by Supervisor:
-
-1. **Health Check Server** (Port 8080) - HTTP server for Render health checks
-2. **D-Bus System Daemon** - Required for GNOME
-3. **VNC Server** (Port 5900) - Xvnc with 1920x1080 resolution
-4. **noVNC** (Port 5000) - Browser-based VNC client
-5. **GNOME Session** - Full GNOME desktop environment
-
-## Resource Specifications
-
-### Pro Ultra Plan Includes:
-- **RAM**: 32GB
-- **vCPUs**: 8 cores
-- **Storage**: 500GB persistent SSD
-- **Network**: High-performance networking
-- **Bandwidth**: Unlimited
-
-## Customization
-
-### Change VNC Password
-
-Edit `Dockerfile`:
-```dockerfile
-echo "YOUR_PASSWORD" | vncpasswd -f > ~/.vnc/passwd && \
-```
-
-### Change Screen Resolution
-
-Edit `supervisord.conf`:
-```ini
-command=/usr/bin/Xvnc :1 -geometry 1920x1080 ...
-```
-
-Common resolutions: 1920x1080, 2560x1440, 3840x2160
-
-### Change Storage Size
-
-Edit `render.yaml`:
-```yaml
-sizeGB: 500  # Change to your desired size
-```
-
-### Change Region
-
-Edit `render.yaml`:
-```yaml
-region: oregon  # Options: oregon, frankfurt, singapore, ohio
-```
+**noVNC (Browser)**: Open `https://your-app.onrender.com:5000`
+- Click "Connect"
+- Password: `ubuntu`
 
 ## Files
 
-- `Dockerfile` - Container configuration
-- `supervisord.conf` - Service manager configuration
-- `healthcheck.py` - Web health check server
-- `render.yaml` - Render.com blueprint configuration
+- `Dockerfile` - Container setup
+- `supervisord.conf` - Service manager
+- `healthcheck.py` - Health check server
+- `render.yaml` - Render.com config
 
-## Troubleshooting
+## Credentials
 
-### VNC Connection Refused
-- Check that the service is fully started (may take 2-3 minutes)
-- Verify port 5000 is exposed in Render dashboard
-- Check logs in Render dashboard for errors
-
-### GNOME Not Starting
-- Check supervisor logs in Render dashboard
-- Ensure D-Bus is running before GNOME
-- Verify /run/user/1000 directory exists
-
-### Performance Issues
-- Ensure you're on Pro Ultra plan for best performance
-- Check Render metrics for resource usage
-- Consider reducing screen resolution for lower bandwidth
-
-## Cost Optimization
-
-- Pro Ultra plan: ~$85/month
-- 500GB storage: ~$25/month
-- Total estimated: ~$110/month
-
-For lower costs, you can:
-- Reduce to Pro or Standard plan
-- Reduce storage size
-- Use only when needed (pause when not in use)
-
-## Support
-
-For issues with:
-- **Render deployment**: Check Render.com documentation
-- **VNC connection**: Check firewall and VNC client settings
-- **GNOME issues**: Check Ubuntu/GNOME documentation
-
-## License
-
-This configuration is provided as-is for educational and development purposes.
+- VNC Password: `ubuntu`
+- User: `ubuntu`
+- Password: `ubuntu`
