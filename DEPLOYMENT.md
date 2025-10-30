@@ -50,6 +50,15 @@ https://ubuntu-gnome-desktop-xxxx.onrender.com
 ```
 
 ### 5. Connect via VNC
+
+#### Option A: Web Browser (Easiest!)
+1. Open your browser
+2. Go to: `ubuntu-gnome-desktop-xxxx.onrender.com:5000`
+3. Click "Connect" in the noVNC interface
+4. Enter VNC password: `ubuntu`
+5. Your GNOME desktop appears in the browser!
+
+#### Option B: VNC Client
 1. Install a VNC client:
    - **Windows**: RealVNC Viewer, TightVNC
    - **Mac**: RealVNC Viewer, Screen Sharing
@@ -57,23 +66,20 @@ https://ubuntu-gnome-desktop-xxxx.onrender.com
    
 2. Connect to:
    ```
-   ubuntu-gnome-desktop-xxxx.onrender.com:5000
+   ubuntu-gnome-desktop-xxxx.onrender.com:5900
    ```
 
 3. Enter VNC password: `ubuntu`
 
 4. Enjoy your Ubuntu GNOME desktop!
 
-### 6. Access Web Interface
-Visit your service URL in a browser:
+### 6. Access Your GNOME Desktop
+Visit your service URL in a browser to verify the health check:
 ```
 https://ubuntu-gnome-desktop-xxxx.onrender.com
 ```
 
-This shows:
-- Connection instructions
-- System information
-- Health check status at `/health`
+You should see: "Ubuntu GNOME VNC Server - Port 5000"
 
 ## Troubleshooting
 
