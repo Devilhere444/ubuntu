@@ -22,10 +22,13 @@ WORKDIR /home/ubuntu
 
 # Set up VNC password
 RUN mkdir -p ~/.vnc && \
-    echo "${VNC_PW}" | vncpasswd -f > ~/.vnc/passwd && \
+    echo "1234" | vncpasswd -f > ~/.vnc/passwd && \
     chmod 600 ~/.vnc/passwd
 
 USER root
+
+# Prepare X11 socket directory
+RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
 
 # Supervisor config for running everything
 RUN mkdir -p /etc/supervisor/conf.d
