@@ -3,14 +3,10 @@ FROM ubuntu:24.04
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
 
-# Install CA certificates and update them
-RUN apt update && \
+# Install all required packages for GNOME + noVNC in one layer
+RUN apt update && apt upgrade -y && \
     apt install -y ca-certificates && \
     update-ca-certificates && \
-    apt clean
-
-# Install required packages for GNOME + noVNC
-RUN apt update && apt upgrade -y && \
     apt install -y --no-install-recommends \
                    ubuntu-desktop-minimal \
                    tigervnc-standalone-server \
