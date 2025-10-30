@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ubuntu-gnome-desktop
+    env: docker
+    plan: pro ultra
+    region: oregon
+    dockerfilePath: ./Dockerfile
+    disk:
+      name: ubuntu-storage
+      mountPath: /home/ubuntu
+      sizeGB: 500
+    envVars:
+      - key: PORT
+        value: 8080
+      - key: VNC_PORT
+        value: 5000
+    numInstances: 1
+    dockerCommand: /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
