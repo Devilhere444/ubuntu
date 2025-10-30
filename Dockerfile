@@ -14,8 +14,8 @@ RUN apt update && apt upgrade -y && \
                    python3 && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-# Create ubuntu user
-RUN useradd -m -s /bin/bash -u 1000 ubuntu && \
+# Create ubuntu user or modify existing
+RUN (useradd -m -s /bin/bash -u 1000 ubuntu 2>/dev/null || true) && \
     echo "ubuntu:ubuntu" | chpasswd && \
     usermod -aG sudo ubuntu
 
