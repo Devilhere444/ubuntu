@@ -11,21 +11,19 @@ Minimal Ubuntu 24.04 GNOME desktop running in browser via noVNC.
 
 ## Access
 
-Your service URL: `https://your-app.onrender.com`
+Open your Render.com service URL directly in browser:
+`https://your-app.onrender.com`
 
-**noVNC (Browser)**: Open `https://your-app.onrender.com:5000`
-- Click "Connect"
-- Password: `ubuntu`
+Click "Connect" and enter password: `ubuntu`
 
 ## Files
 
 - `Dockerfile` - Container setup
 - `supervisord.conf` - Service manager
-- `healthcheck.py` - Health check server
 - `render.yaml` - Render.com config
 
 ## Credentials
 
 - VNC Password: `ubuntu`
-- User: `ubuntu`
+- User: `ubuntu`  
 - Password: `ubuntu`
