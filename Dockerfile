@@ -2,37 +2,43 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 ENV DISPLAY=:1
-ENV VNC_PORT=6901
-ENV VNC_PW=1234
+ENV VNC_PORT=5000
 
-# Update system and install GNOME, VNC, and noVNC
+# Update system and install GNOME desktop with VNC
 RUN apt update && apt upgrade -y && \
-    apt install -y gnome-session gdm3 dbus-x11 x11-xserver-utils \
-                   supervisor novnc websockify tigervnc-standalone-server \
-                   tigervnc-common xfce4-terminal curl wget sudo && \
+    apt install -y ubuntu-desktop-minimal \
+                   tigervnc-standalone-server \
+                   tigervnc-common \
+                   dbus-x11 \
+                   supervisor \
+                   python3 && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
-# Create or configure VNC user
-RUN id -u ubuntu &>/dev/null || useradd -m -s /bin/bash ubuntu; \
+# Create ubuntu user or modify existing
+RUN id ubuntu &>/dev/null || useradd -m -s /bin/bash -u 1000 ubuntu; \
     echo "ubuntu:ubuntu" | chpasswd && \
     usermod -aG sudo ubuntu
 
 USER ubuntu
 WORKDIR /home/ubuntu
 
-# Set up VNC password
+# Set up VNC
 RUN mkdir -p ~/.vnc && \
-    echo "1234" | vncpasswd -f > ~/.vnc/passwd && \
+    echo "ubuntu" | vncpasswd -f > ~/.vnc/passwd && \
     chmod 600 ~/.vnc/passwd
 
 USER root
 
-# Prepare X11 socket directory
-RUN mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix
+# Create runtime directory
+RUN mkdir -p /run/user/1000 && \
+    chown ubuntu:ubuntu /run/user/1000 && \
+    chmod 700 /run/user/1000
 
-# Supervisor config for running everything
-RUN mkdir -p /etc/supervisor/conf.d
+# Supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY healthcheck.py /usr/local/bin/healthcheck.py
+RUN chmod +x /usr/local/bin/healthcheck.py
 
-EXPOSE 6901
+EXPOSE 5000 8080
+
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
